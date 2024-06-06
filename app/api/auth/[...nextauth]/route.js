@@ -31,6 +31,7 @@ const options = {
         if (!userExists) {
           await User.create({
             email: profile.email,
+            name: profile.name,
             username: profile.email.split("@")[0].toLowerCase(),
             image: profile.picture,
           });
