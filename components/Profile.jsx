@@ -6,7 +6,7 @@ const Profile = ({name, desc, data, handleEdit, handleDelete}) => {
 
       <div className="text-center">
         <h1 className="head_text">
-          <span className="blue_gradient">{name} Profile</span>
+          <span className="blue_gradient">{name}'s Profile</span>
           </h1>
       </div>
         <div className="mt-10 prompt_layout">
