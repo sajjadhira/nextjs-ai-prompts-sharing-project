@@ -13,7 +13,7 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
     setCopied(prompt.prompt);
     setTimeout(() => {
       setCopied("");
-    }, 3000);
+    }, 2000);
   }
   return (
     <div className='prompt_card'>

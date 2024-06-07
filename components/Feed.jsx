@@ -32,7 +32,7 @@ const Feed = () => {
 
   useEffect(() => {
     // Fetch data from API
-    const fetechPost = async () => {
+    const fetechPrompt = async () => {
       try {
         let response = await fetch('/api/prompt');
         if(response.ok) {
@@ -45,7 +45,7 @@ const Feed = () => {
       }
     }
 
-    fetechPost();
+    fetechPrompt();
   }, [])
 
   return (
