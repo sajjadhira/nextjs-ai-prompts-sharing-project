@@ -43,8 +43,23 @@ const handleEdit = (prompt) => {
     router.push(`/update-prompt?id=${prompt._id}`);
 };
 
-const handleDelete = (prompt) => {
-    console.log('Delete', prompt);
+const handleDelete = async(prompt) => {
+    const hasConfirmed = confirm("Are you sure you want to delete this prompt?");
+
+    if(hasConfirmed) {
+        await fetch(`/api/prompt/${prompt._id.toString()}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if(response.ok) {
+                setPrompts(prompts.filter(p => p._id !== prompt._id));
+                // router.reload();
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
 };
 
 

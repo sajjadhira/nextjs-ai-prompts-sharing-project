@@ -40,7 +40,7 @@ const Form = ({type, post, setPost, submitting, handleSubmit}) => {
             <input 
             value={post.tag}
             onChange={(e) => setPost({...post, tag: e.target.value})}
-            placeholder='#tag'
+            placeholder='tag'
             className='form_input'
             required
             />
@@ -48,7 +48,7 @@ const Form = ({type, post, setPost, submitting, handleSubmit}) => {
 
 
           <div className="flex-end mx-3 mb-5 gap-4">
-            <Link href="/" className='outline_btn'>
+            <Link href="/profile" className='outline_btn'>
               Cancel
             </Link>
 

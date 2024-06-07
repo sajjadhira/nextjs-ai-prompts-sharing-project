@@ -9,12 +9,20 @@ export const GET = async (req, {params}) => {
         console.log(prompt)
 
         if (!prompt) {
-            return new Response("Prompt not found", {status: 404});
+            return new Response(JSON.stringify(
+                {
+                    message: "Prompt not found"
+                }
+            ), {status: 404});
         }
         return new Response(JSON.stringify(prompt), {status: 200});
     } catch (e) {
         console.error(e);
-        return new Response("Error fetching prompts", {status: 500});
+        return new Response(JSON.stringify(
+            {
+                message: "Error fetching prompt! ".concat(e)
+            }
+        ), {status: 500});
     }
 }
 
@@ -45,7 +53,7 @@ export const PATCH = async (req, {params}) => {
     } catch (e) {
         console.error(e);
         return new Response({
-            message: "Error updating prompt"
+            message: "Error updating prompt! ".concat(e)
         }, {status: 500});
     }
 }
@@ -53,26 +61,28 @@ export const PATCH = async (req, {params}) => {
 
 // DELETE request to delete a prompt
 
-export const DELETE = async (req, {params}) => {
+export const DELETE = async (request, { params }) => {
     try {
         await connectToDB();
 
-        const existingPrompt = await Prompt.findById(params.id);
+        // Find the prompt by ID and remove it
+        // await Prompt.findByIdAndRemove(params.id);
+        let promptToDelete = await Prompt.findById(params.id);
 
-        if (!existingPrompt) {
-            return new Response("Prompt not found", {status: 404});
+        if (!promptToDelete) {
+            return new Response(JSON.stringify({
+                message: "Prompt not found or already deleted."
+            }), { status: 404 });
         }
 
-        await existingPrompt.remove();
+        await Prompt.findByIdAndDelete(params.id);
 
         return new Response(JSON.stringify({
-            message: "Prompt deleted successfully"
-        }), {status: 200});
-        
-    } catch (e) {
-        console.error(e);
+            message: "Prompt deleted successfully."
+        }), { status: 200 });
+    } catch (error) {
         return new Response(JSON.stringify({
-            message: "Error deleting prompt"
-        }), {status: 500});
+            message: "Error deleting prompt. ".concat(error)
+        }), { status: 500 });
     }
-}
+};
