@@ -11,7 +11,7 @@ const Form = ({type, post, setPost, submitting, handleSubmit}) => {
         </h1>
 
         <p className="desc text-center max-w-md mt-3 mb-3">
-          {type} a prompt to get started
+          {type} prompt and get ideas from the community
         </p>
 
         <form 

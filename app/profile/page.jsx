@@ -17,18 +17,11 @@ const ProfilePage = () => {
         }
     }, [session]);
 
-    const handleEdit = () => {
-        console.log('Edit');
-    }
-
-    const handleDelete = () => {
-        console.log('Delete');
-    }
 
     
   useEffect(() => {
     // Fetch data from API
-    const fetechPrompt = async () => {
+    const fetechPrompts = async () => {
       try {
         let response = await fetch(`api/users/${session?.user.id}/prompts`);
         if(response.ok) {
@@ -42,20 +35,31 @@ const ProfilePage = () => {
       }
     }
 
-    if (session?.user.id) fetechPrompt();
-  }, [])
+    if (session?.user.id) fetechPrompts();
+  }, [session?.user.id]);
 
-  return (
+
+const handleEdit = (prompt) => {
+    router.push(`/update-prompt?id=${prompt._id}`);
+};
+
+const handleDelete = (prompt) => {
+    console.log('Delete', prompt);
+};
+
+
+return (
     <div>
         <Profile
-        name={session?.user.name}
-        desc="I am a full stack developer"
-        data={prompts}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-         />
+            name={session?.user.name}
+            desc="I am a full stack developer"
+            data={prompts}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+        />
     </div>
-  )
+);
+
 }
 
 export default ProfilePage
