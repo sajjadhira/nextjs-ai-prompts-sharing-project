@@ -8,9 +8,15 @@ export const GET = async (req ,{params}) => {
         const prompts = await Prompt.find({
             creator: params.id
         }).populate("creator");
-        return new Response(JSON.stringify(prompts), {status: 200});
+        return new Response(JSON.stringify(prompts), {status: 200,
+            headers: {
+                'Cache-Control': 'no-store'
+            }});
     } catch (e) {
         console.error(e);
-        return new Response("Error fetching prompts", {status: 500});
+        return new Response("Error fetching prompts", {status: 500,
+            headers: {
+                'Cache-Control': 'no-store'
+            }});
     }
 }
