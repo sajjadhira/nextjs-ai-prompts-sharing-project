@@ -34,7 +34,14 @@ const Feed = () => {
     // Fetch data from API
     const fetechPrompt = async () => {
       try {
-        let response = await fetch('/api/prompt');
+        let response = await fetch('/api/prompt', {
+        method: 'GET',
+        headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+        }
+    });
         if(response.ok) {
           let data = await response.json();
           setPrompts(data);
