@@ -3,7 +3,7 @@
 import {useState, useEffect} from 'react'
 import PromptCard from './PromptCard';
 
-const PromptCardList = ({data, handleTagClick}) => {
+const PromptCardList = ({data, handleTagClick, searchText}) => {
   return (
     <div className="mt-16 prompt_layout">
      {
@@ -13,6 +13,7 @@ const PromptCardList = ({data, handleTagClick}) => {
           key={prompt._id}
           prompt={prompt}
           handleTagClick={handleTagClick}
+          searchText={searchText}
           />
         )
       })
@@ -34,7 +35,11 @@ const Feed = () => {
     // Fetch data from API
     const fetechPrompt = async () => {
       try {
-        let response = await fetch('/api/prompt', {
+        let endpoint = '/api/prompt';
+        if(searchText && searchText.length > 0) {
+          endpoint = `/api/prompt?q=${searchText}`;
+        }
+        let response = await fetch(endpoint, {
         method: 'GET',
         headers: {
             'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
@@ -53,7 +58,7 @@ const Feed = () => {
     }
 
     fetechPrompt();
-  }, [])
+  }, [searchText])
 
 
   const onClickTag = (e) => {
@@ -75,6 +80,7 @@ const Feed = () => {
       <PromptCardList
       data={Prompts}
       handleTagClick={onClickTag}
+      searchText={searchText}
        />
     </section>
   )

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 
-const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
+const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete, searchText}) => {
 
   const { data: session } = useSession();
   const pathName = usePathname();
@@ -67,7 +67,13 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
           />
         </div>
       </div>
-      <p className='my-4 text-sm text-gray-700 font-satoshi'>{prompt.prompt}</p>
+      <p className='my-4 text-sm text-gray-700 font-satoshi'>{
+    searchText?.length > 0 
+        ? <span dangerouslySetInnerHTML={{ __html: prompt.prompt.replace(new RegExp(searchText, 'gi'), `<b>${searchText}</b>`) }}></span>
+        : prompt.prompt
+}
+
+</p>
       <p className='text-sm cursor-pointer font-inter blue_gradient'
      
       >{

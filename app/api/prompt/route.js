@@ -12,10 +12,24 @@ const setNoCacheHeaders = (response) => {
 export const GET = async (req) => {
     try {
         await connectToDB();
-        const prompts = await Prompt.find().populate("creator");
+        const url = new URL(req.url);
+        const q = url.searchParams.get('q');
+        let prompts;
+        if (q) {
+            prompts = await Prompt.find({
+                $or: [
+                    { tag: { $regex: q, $options: 'i' } },
+                    { prompt: { $regex: q, $options: 'i' } }
+                ]
+            }).populate("creator");
+        }else{
+            prompts = await Prompt.find().populate("creator");
+        }
+
         let response = new Response(JSON.stringify(prompts), { status: 200 });
         response = setNoCacheHeaders(response);
         return response;
+
     } catch (e) {
         let response = new Response(JSON.stringify(
             {
