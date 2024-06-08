@@ -42,14 +42,14 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
   <div className="flex items-center">
     <Image
       src="/assets/images/logo.svg"
-      alt="Promptopia"
+      alt="Promption"
       width={40}
       height={40}
       className="rounded-full object-contain"
     />
     <div className="flex flex-col ml-2">
-      <h3 className="font-satoshi font-semibold text-gray-900">Promptopia</h3>
-      <p className="font-inter text-sm text-gray-500">@promptopia</p>
+      <h3 className="font-satoshi font-semibold text-gray-900">Promption</h3>
+      <p className="font-inter text-sm text-gray-500">@promption</p>
     </div>
   </div>
 )}
