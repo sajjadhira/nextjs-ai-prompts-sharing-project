@@ -55,6 +55,11 @@ const Feed = () => {
     fetechPrompt();
   }, [])
 
+
+  const onClickTag = (e) => {
+    setSearchText(e);
+  }
+
   return (
     <section className="feed">
       <form className='relative w-full flex-center'>
@@ -69,7 +74,7 @@ const Feed = () => {
 
       <PromptCardList
       data={Prompts}
-      handleTagClick={() => {}}
+      handleTagClick={onClickTag}
        />
     </section>
   )

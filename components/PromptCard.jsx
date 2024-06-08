@@ -21,8 +21,8 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
   }
   return (
     <div className='prompt_card'>
-      <div className="flex justify-between item-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+      <div className="flex justify-between gap-5 item-start">
+        <div className="flex items-center justify-start flex-1 gap-3 cursor-pointer">
 
 {prompt?.creator ? (
   <div className="flex items-center">
@@ -31,11 +31,11 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
       alt={prompt.creator.username}
       width={40}
       height={40}
-      className="rounded-full object-contain"
+      className="object-contain rounded-full"
     />
     <div className="flex flex-col ml-2">
-      <h3 className="font-satoshi font-semibold text-gray-900">{prompt.creator.name}</h3>
-      <p className="font-inter text-sm text-gray-500">@{prompt.creator.username}</p>
+      <h3 className="font-semibold text-gray-900 font-satoshi">{prompt.creator.name}</h3>
+      <p className="text-sm text-gray-500 font-inter">@{prompt.creator.username}</p>
     </div>
   </div>
 ) : (
@@ -45,11 +45,11 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
       alt="Promption"
       width={40}
       height={40}
-      className="rounded-full object-contain"
+      className="object-contain rounded-full"
     />
     <div className="flex flex-col ml-2">
-      <h3 className="font-satoshi font-semibold text-gray-900">Promption</h3>
-      <p className="font-inter text-sm text-gray-500">@promption</p>
+      <h3 className="font-semibold text-gray-900 font-satoshi">Promption</h3>
+      <p className="text-sm text-gray-500 font-inter">@promption</p>
     </div>
   </div>
 )}
@@ -67,22 +67,26 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
           />
         </div>
       </div>
-      <p className='my-4 font-satoshi text-sm text-gray-700'>{prompt.prompt}</p>
-      <p className='font-inter text-sm blue_gradient cursor-pointer'
-      onClick={() => handleTagClick ? handleTagClick(prompt.tag) : null}
-      >#{prompt.tag}</p>
+      <p className='my-4 text-sm text-gray-700 font-satoshi'>{prompt.prompt}</p>
+      <p className='text-sm cursor-pointer font-inter blue_gradient'
+     
+      >{
+        prompt.tag.split(',').length > 0 ? prompt.tag.split(',').map((tag, index) => (
+          <span key={index} className='tag'  onClick={() => handleTagClick ? handleTagClick(tag) : null}>#{tag.replace(/\s/g, '')} </span>
+        )) : <span className='tag' onClick={() => handleTagClick ? handleTagClick(prompt.tag) : null}>#{prompt.tag.replace(/\s/g, '')}</span>
+        }</p>
 
 
       {session?.user.id === prompt?.creator?._id && pathName === "/profile" && (
-        <div className='mt-5 flex-center gap-4 border-t border-gray-100 pt-3'>
+        <div className='gap-4 pt-3 mt-5 border-t border-gray-100 flex-center'>
           <p
-            className='font-inter text-sm green_gradient cursor-pointer'
+            className='text-sm cursor-pointer font-inter green_gradient'
             onClick={handleEdit}
           >
             Edit
           </p>
           <p
-            className='font-inter text-sm orange_gradient cursor-pointer'
+            className='text-sm cursor-pointer font-inter orange_gradient'
             onClick={handleDelete}
           >
             Delete
