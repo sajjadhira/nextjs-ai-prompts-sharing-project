@@ -1,22 +1,27 @@
-// utils/database.js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-let isConnected = false; // Track the connection status
+let isConnected = false;
 
 export const connectToDB = async () => {
+    // Correcting the setting to 'strictQuery'
+    mongoose.set('strictQuery', true);
+
     if (isConnected) {
+        console.log("Using existing connection");
         return;
     }
 
+    
+
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            dbName: "promptopia"
         });
+
         isConnected = true;
-        console.log('Database connected');
-    } catch (error) {
-        console.error('Error connecting to database:', error);
-        throw error;
+
+        console.log("Connected to DB");
+    } catch (e) {
+        console.error("Error connecting to DB", e);
     }
 };
